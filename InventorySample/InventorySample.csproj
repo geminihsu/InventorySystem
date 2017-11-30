@@ -195,6 +195,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Models\DbHelper.cs" />
+    <Compile Include="Models\InventoryHelper.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\UploadFileController.cs" />
     <Compile Include="Global.asax.cs">
@@ -216,6 +218,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\UploadFile\Index.cshtml" />
+    <Content Include="Views\UploadFile\Confirm.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />

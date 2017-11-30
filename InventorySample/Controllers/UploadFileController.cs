@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Excel;
+using InventorySample.Models;
+using System.Data;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
-using System.IO;
-using System.Data;
-using Excel;
-
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace InventorySample.Controllers
 {
@@ -50,9 +52,23 @@ namespace InventorySample.Controllers
                     reader.IsFirstRowAsColumnNames = true;
                     //Adding reader data to DataSet()
                     DataSet result = reader.AsDataSet();
-                    reader.Close();
+
+                    var items = InventoryHelper.shippingFG(reader);
+                    //insert data to into database
+                    //DbHelper.InsertSN(items);
+
+                    /*      var d = result.Tables[0].AsEnumerable().Select((x,index)=> new {
+                              SN = x[0],
+                          Location = x[1]
+                      }).ToList();*/
+
                     //Sending result data to View
-                    return View(result.Tables[0]);
+                    return View(items);
+                    //return Json(d);
+
+                    //Display data from database
+                    //ItemDBContext db = new ItemDBContext();
+                    //return View(db.InventoryItems.ToList());
                 }
             }
             else
@@ -60,6 +76,19 @@ namespace InventorySample.Controllers
                 ModelState.AddModelError("File", "Please upload your file");
             }
             return View();
+        }
+
+        // GET: Items/Create
+        public ActionResult Confirm([Bind(Include = "ID,SN,Location")] List<Item> items)
+        {
+
+            //insert data to into database
+            DbHelper.InsertSN(items);
+            
+            //Display data from database
+            ItemDBContext db = new ItemDBContext();
+            return View(db.InventoryItems.ToList());
+            //return View();
         }
     }
 }

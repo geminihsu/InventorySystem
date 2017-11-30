@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Shipping FG List";
+}
+@model IEnumerable<InventorySample.Models.Item>
+@using System.Data
+
+<h2>Read Excel File and Display in mvc5</h2>
+@using (Html.BeginForm("Index", "UploadFile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken();
+    @Html.ValidationSummary();
+
+    <label class="text-info">Upload Excel File</label>
+    <input type="file" class="form-control" name="uploadfile" id="uploadfile" />
+    <input type="submit" value="submit" class="btn btn-default" />
+
+    if (Model != null)
+    {
+        <label class="text-info">@Model.ToList().Capacity</label>
+        <table class="table table-responsive table-bordered">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Location)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+        </table>
+        }
+    }
+}
