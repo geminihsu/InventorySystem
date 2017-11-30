@@ -46,7 +46,7 @@ namespace InventorySample.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,SN,Location")] Item item)
+        public ActionResult Create([Bind(Include = "Id,SN,Location")] Item item)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace InventorySample.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,SN,Location")] Item item)
+        public ActionResult Edit([Bind(Include = "Id,SN,Location")] Item item)
         {
             if (ModelState.IsValid)
             {

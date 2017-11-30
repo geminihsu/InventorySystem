@@ -1,14 +1,11 @@
 ﻿using Excel;
 using InventorySample.Models;
+using System;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace InventorySample.Controllers
 {
@@ -53,22 +50,10 @@ namespace InventorySample.Controllers
                     //Adding reader data to DataSet()
                     DataSet result = reader.AsDataSet();
 
-                    var items = InventoryHelper.shippingFG(reader);
-                    //insert data to into database
-                    //DbHelper.InsertSN(items);
+                    var guid = InventoryHelper.AddShippingFG(reader);
+                    Container container = InventoryHelper.CheckAndGetContainerModel(guid);
 
-                    /*      var d = result.Tables[0].AsEnumerable().Select((x,index)=> new {
-                              SN = x[0],
-                          Location = x[1]
-                      }).ToList();*/
-
-                    //Sending result data to View
-                    return View(items);
-                    //return Json(d);
-
-                    //Display data from database
-                    //ItemDBContext db = new ItemDBContext();
-                    //return View(db.InventoryItems.ToList());
+                    return View(container);
                 }
             }
             else
@@ -78,13 +63,16 @@ namespace InventorySample.Controllers
             return View();
         }
 
-        // GET: Items/Create
-        public ActionResult Confirm([Bind(Include = "ID,SN,Location")] List<Item> items)
+        [HttpPost]
+        public ActionResult Confirm(Guid id)
         {
+            Container container = InventoryHelper.CheckAndGetContainerModel(id);
 
+            //clear Table
+            //DbHelper.DeleteSN(container.items);
             //insert data to into database
-            DbHelper.InsertSN(items);
-            
+            DbHelper.InsertSN(container.items);
+
             //Display data from database
             ItemDBContext db = new ItemDBContext();
             return View(db.InventoryItems.ToList());

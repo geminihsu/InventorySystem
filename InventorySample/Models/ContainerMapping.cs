@@ -9,22 +9,23 @@ namespace InventorySample.Models
     {
         private static Dictionary<Guid, Container> FileUploadCache { get; } = new Dictionary<Guid, Container>();
 
-        private static void AddOrUpdateCache(Container model)
+
+        public static void AddOrUpdateCache(Container model)
         {
-            if (FileUploadCache.ContainsKey(model.ID))
+            if (FileUploadCache.ContainsKey(model.Id))
             {
-                FileUploadCache[model.ID] = model;
+                FileUploadCache[model.Id] = model;
                 return;
             }
 
-            FileUploadCache.Add(model.ID, model);
+            FileUploadCache.Add(model.Id, model);
         }
 
 
-        private static Container CheckAndGetCacheModel(Guid fileId)
+        public static Container CheckAndGetCacheModel(Guid fileId)
         {
             return FileUploadCache.ContainsKey(fileId)
-                ? FileUploadCache[fileId].ID.Equals(fileId) ? FileUploadCache[fileId] : null : null;
+                ? FileUploadCache[fileId].Id.Equals(fileId) ? FileUploadCache[fileId] : null : null;
         }
     }
 }

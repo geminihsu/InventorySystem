@@ -1,8 +1,7 @@
 ﻿@{
     ViewBag.Title = "Upload Shipping documents";
 }
-@model List<InventorySample.Models.Item>
-@using System.Data
+@model InventorySample.Models.Container
 
 <h2>Upload Shipping documents</h2>
 @using (Html.BeginForm("Index", "UploadFile", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -14,15 +13,48 @@
     <input type="file" class="form-control" name="uploadfile" id="uploadfile" />
     <input type="submit" value="submit" class="btn btn-default" />
 
+    <p></p>
     if (Model != null)
     {
+        @Html.DisplayName("Container No # ")
+        @Html.DisplayFor(m => m.ContainerNo)
+        <br />
+        @Html.DisplayName("Invoice No # ")
+        @Html.DisplayFor(m => m.InvoiceNo)
+        <br />
+        @Html.DisplayName("Total Pieces received: ")
+        @Html.DisplayFor(m => m.PiceRecevid)
+        <br />
+        @Html.DisplayName("Received: ")
+        @Html.DisplayFor(m => m.RecevidDate)
+        <br />
+        @Html.DisplayName("Received By:  ")
+        @Html.DisplayFor(m => m.WorkerInfo)
+        <br />
+        @Html.DisplayName("Entered CS:  ")
+        @Html.DisplayFor(m => m.EnteredCS)
+        <br />
+        @Html.DisplayName("Entered PT:  ")
+        @Html.DisplayFor(m => m.EnteredPT)
 
-        @Html.ActionLink("Back to List", "Confirm", new { items = Model.ToList()});
-        <label class="text-info">Items Count : @Model.ToList().Capacity</label>
         <table class="table table-responsive table-bordered">
-            @foreach (var item in Model)
-            {
-                <tr>
+            <tr>
+                <td>
+                    @Html.DisplayName("Serial No")
+                </td>
+                <td>
+                    @Html.DisplayName("Location")
+                </td>
+                <td>
+                    @Html.DisplayName("Zone code")
+                </td>
+                <td>
+                    @Html.DisplayName("Operation")
+                </td>
+            </tr>
+                @foreach (var item in Model.items)
+                {
+<tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.SN)
                     </td>
@@ -30,13 +62,36 @@
                         @Html.DisplayFor(modelItem => item.Location)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                        @Html.DisplayFor(modelItem => item.ZoneCode)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                     </td>
                 </tr>
             }
         </table>
-        }
+
+        <label class="text-info">Items Count : @Model.items.Count</label>
+    }
     <p></p>
+
+}
+
+<p>
+    <label class="text-info">Please confirm information before insert to our database</label>
+</p>
+
+@using (Html.BeginForm("Confirm", "UploadFile", FormMethod.Post, new { }))
+{
+  
+    @Html.HiddenFor(m => m.Id)
+    @Html.LabelFor(m => m.ContainerNo)
+    @Html.TextBoxFor(m => m.ContainerNo)
+    
+    <button type="submit">Confirm</button>
+    // LAble
+    // Input // disabled
+    // Submit
 }
