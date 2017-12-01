@@ -1,4 +1,5 @@
-﻿using InventorySample.Models;
+﻿using InventorySample.Entities;
+using InventorySample.Models;
 using SampleDbContext;
 using System.Data.Entity;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace InventorySample.Controllers
 {
     public class ItemsController : Controller
     {
-        private ItemDBContext db = new ItemDBContext();
+        private SampleDBContext db = new SampleDBContext();
 
         // GET: Items
         public ActionResult Index()
@@ -17,7 +18,7 @@ namespace InventorySample.Controllers
             var servic = new SmapleService();
             servic.Show();
 
-            return View(db.InventoryItems.ToList());
+            return View(db.Items.ToList());
         }
 
         // GET: Items/Details/5
@@ -27,7 +28,7 @@ namespace InventorySample.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.InventoryItems.Find(id);
+            Item item = db.Items.Find(id);
             if (item == null)
             {
                 return HttpNotFound();
@@ -50,7 +51,7 @@ namespace InventorySample.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.InventoryItems.Add(item);
+                db.Items.Add(item);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +66,7 @@ namespace InventorySample.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.InventoryItems.Find(id);
+            Item item = db.Items.Find(id);
             if (item == null)
             {
                 return HttpNotFound();
@@ -96,7 +97,7 @@ namespace InventorySample.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.InventoryItems.Find(id);
+            Item item = db.Items.Find(id);
             if (item == null)
             {
                 return HttpNotFound();
@@ -109,8 +110,8 @@ namespace InventorySample.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Item item = db.InventoryItems.Find(id);
-            db.InventoryItems.Remove(item);
+            Item item = db.Items.Find(id);
+            db.Items.Remove(item);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

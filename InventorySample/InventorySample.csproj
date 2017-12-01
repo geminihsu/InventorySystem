@@ -99,6 +99,8 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Text.Encodings.Web, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.4.4.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
@@ -195,6 +197,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Models\Common\Constants.cs" />
     <Compile Include="Models\Container.cs" />
     <Compile Include="Models\ContainerMapping.cs" />
@@ -205,8 +208,31 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Item.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Entities\C__MigrationHistory.cs">
+      <DependentUpon>SampleDBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Item.cs">
+      <DependentUpon>SampleDBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SampleDBContext.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SampleDBContext.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SampleDBContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SampleDBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SampleDBContext.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SampleDBContext.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ZoneCode.cs">
+      <DependentUpon>SampleDBContext.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -215,6 +241,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Entities\SampleDBContext.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SampleDBContext.edmx</DependentUpon>
+      <LastGenOutput>SampleDBContext.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Entities\SampleDBContext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SampleDBContext.edmx</DependentUpon>
+      <LastGenOutput>SampleDBContext.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -222,6 +258,13 @@
     </Content>
     <Content Include="Views\UploadFile\Index.cshtml" />
     <Content Include="Views\UploadFile\Confirm.cshtml" />
+    <EntityDeploy Include="Entities\SampleDBContext.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SampleDBContext.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Entities\SampleDBContext.edmx.diagram">
+      <DependentUpon>SampleDBContext.edmx</DependentUpon>
+    </Content>
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -273,6 +316,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Api\" />
+    <Folder Include="Views\Item\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -295,6 +340,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

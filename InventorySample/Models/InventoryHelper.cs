@@ -1,4 +1,5 @@
 ﻿using Excel;
+using InventorySample.Entities;
 using InventorySample.Models;
 using InventorySample.Models.Common;
 using System;
@@ -51,7 +52,7 @@ namespace InventorySample.Controllers
                                 {
                                     zoneCode = MapZoneCode(location);
                                     int locLen = location.Length;
-                                    while (locLen < Constants.ZONE_CODE_LEN_LIMIT)
+                                    while (locLen < 3)
                                     {
                                         location = "0" + location;
                                         locLen++;
@@ -60,10 +61,10 @@ namespace InventorySample.Controllers
                                 }
 
                                 Item item = new Item();
-                                item.Id = serialIndex;
+                                item.ID = serialIndex;
                                 item.SN = serial_no;
                                 item.Location = location;
-                                item.ZoneCode = zoneCode;
+                                item.ZoneCode = zoneCode.ToString();
 
                                 items.Add(item);
 

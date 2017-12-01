@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Shipping FG List";
 }
-@model IEnumerable<InventorySample.Models.Item>
+@model InventorySample.Models.Container
 @using System.Data
 
 <h2>Read Excel File and Display in mvc5</h2>
@@ -16,9 +16,9 @@
 
     if (Model != null)
     {
-        <label class="text-info">@Model.ToList().Capacity</label>
+        <label class="text-info">@Model.ContainerNo</label>
         <table class="table table-responsive table-bordered">
-            @foreach (var item in Model)
+            @foreach (var item in Model.items)
             {
                 <tr>
                     <td>
@@ -28,9 +28,9 @@
                         @Html.DisplayFor(modelItem => item.Location)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
                     </td>
                 </tr>
             }

@@ -1,4 +1,5 @@
 ﻿using Excel;
+using InventorySample.Entities;
 using InventorySample.Models;
 using System;
 using System.Data;
@@ -74,8 +75,15 @@ namespace InventorySample.Controllers
             DbHelper.InsertSN(container.items);
 
             //Display data from database
-            ItemDBContext db = new ItemDBContext();
-            return View(db.InventoryItems.ToList());
+            SampleDBContext db = new SampleDBContext();
+
+            var model = new Container()
+            {
+                Id = Guid.NewGuid(),
+                items = db.Items.ToList()
+            };
+
+            return View(model);
             //return View();
         }
     }

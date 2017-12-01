@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using InventorySample.Entities;
+using System.Collections.Generic;
 
 namespace InventorySample.Models
 {
@@ -16,16 +17,16 @@ namespace InventorySample.Models
 
         public static void InsertTable(Item item)
         {
-            ItemDBContext db = new ItemDBContext();
-            db.InventoryItems.Add(item);
+            SampleDBContext db = new SampleDBContext();
+            db.Items.Add(item);
             db.SaveChanges();
         }
 
         public static void DeleteTable(Item item)
         {
-            ItemDBContext db = new ItemDBContext();
-            Item i = db.InventoryItems.Find(item.Id);
-            db.InventoryItems.Remove(i);
+            SampleDBContext db = new SampleDBContext();
+            Item i = db.Items.Find(item.ID);
+            db.Items.Remove(i);
             db.SaveChanges();
         }
     }
