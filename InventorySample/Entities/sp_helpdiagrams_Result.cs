@@ -10,13 +10,13 @@
 namespace InventorySample.Entities
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Item
+    public partial class sp_helpdiagrams_Result
     {
+        public string Database { get; set; }
+        public string Name { get; set; }
         public int ID { get; set; }
-        public string SN { get; set; }
-        public string Location { get; set; }
-        public string ZoneCode { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

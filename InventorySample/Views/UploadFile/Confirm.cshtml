@@ -28,9 +28,9 @@
                         @Html.DisplayFor(modelItem => item.Location)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Seq }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Seq }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Seq })
                     </td>
                 </tr>
             }

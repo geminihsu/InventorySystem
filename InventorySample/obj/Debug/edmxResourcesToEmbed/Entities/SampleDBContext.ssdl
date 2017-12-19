@@ -1,42 +1,146 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="SampleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="__MigrationHistory">
+<Schema Namespace="SampleModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="SampleModelStoreContainer">
+    <EntitySet Name="C__MigrationHistory" EntityType="SampleModel.Store.C__MigrationHistory" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Item_history" EntityType="SampleModel.Store.Item_history" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Locations" EntityType="SampleModel.Store.Locations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Models" EntityType="SampleModel.Store.Models" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="SampleModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FGItemIns" EntityType="SampleModel.Store.FGItemIns" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="C__MigrationHistory1" EntityType="SampleModel.Store.C__MigrationHistory1" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Item_transcation_inventory" EntityType="SampleModel.Store.Item_transcation_inventory" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Model1" EntityType="SampleModel.Store.Model1" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Item_history_Location" Association="SampleModel.Store.FK_Item_history_Location">
+      <End Role="Location" EntitySet="Locations" />
+      <End Role="Item_history" EntitySet="Item_history" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="C__MigrationHistory">
     <Key>
       <PropertyRef Name="MigrationId" />
       <PropertyRef Name="ContextKey" />
     </Key>
-    <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
-    <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="MigrationId" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="ContextKey" Type="nvarchar" Nullable="false" MaxLength="300" />
     <Property Name="Model" Type="varbinary(max)" Nullable="false" />
-    <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+    <Property Name="ProductVersion" Type="nvarchar" Nullable="false" MaxLength="32" />
   </EntityType>
-  <EntityType Name="Items">
+  <EntityType Name="Item_history">
     <Key>
-      <PropertyRef Name="ID" />
+      <PropertyRef Name="Seq" />
+      <PropertyRef Name="SN" />
     </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="SN" Type="nvarchar(max)" />
-    <Property Name="Location" Type="nvarchar(max)" />
-    <Property Name="ZoneCode" Type="varchar" MaxLength="4" Nullable="false" />
+    <Property Name="Seq" Type="int" Nullable="false" />
+    <Property Name="SN" Type="varchar" Nullable="false" MaxLength="16" />
+    <Property Name="Location" Type="varchar" Nullable="false" MaxLength="3" />
+    <Property Name="DateIn" Type="datetime" Nullable="false" />
+    <Property Name="DateOut" Type="datetime" Nullable="false" />
+    <Property Name="SaleOrderNo" Type="varchar" Nullable="true" MaxLength="50" />
+    <Property Name="TrakingNo" Type="varchar" Nullable="true" MaxLength="20" />
+    <Property Name="ModelNo" Type="varchar" Nullable="false" MaxLength="6" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'Sample.dbo.ZoneCode' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="ZoneCode">
+  <EntityType Name="Locations">
     <Key>
-      <PropertyRef Name="Zone" />
       <PropertyRef Name="Code" />
     </Key>
-    <Property Name="Zone" Type="int" Nullable="false" />
-    <Property Name="Code" Type="nchar" MaxLength="3" Nullable="false" />
+    <Property Name="Code" Type="varchar" Nullable="false" MaxLength="3" />
+    <Property Name="ZoneCode" Type="smallint" Nullable="true" />
   </EntityType>
-  <EntityContainer Name="SampleModelStoreContainer">
-    <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="ZoneCode" EntityType="Self.ZoneCode" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [ZoneCode].[Zone] AS [Zone], 
-    [ZoneCode].[Code] AS [Code]
-    FROM [dbo].[ZoneCode] AS [ZoneCode]</DefiningQuery>
-    </EntitySet>
-  </EntityContainer>
+  <EntityType Name="Models">
+    <Key>
+      <PropertyRef Name="MODELNO" />
+    </Key>
+    <Property Name="MODELNO" Type="varchar" Nullable="false" MaxLength="6" />
+    <Property Name="VERSION" Type="int" Nullable="false" />
+    <Property Name="FG" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="MODEL1" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="SOLE" Type="bit" Nullable="true" />
+    <Property Name="DESC" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="FP_DATE" Type="datetime" Nullable="true" />
+    <Property Name="LABOR_W" Type="bit" Nullable="true" />
+    <Property Name="SNBegin" Type="int" Nullable="true" />
+    <Property Name="SNEnd" Type="int" Nullable="true" />
+    <Property Name="ViewFile" Type="varbinary(max)" Nullable="true" />
+    <Property Name="SPFile" Type="varbinary(max)" Nullable="true" />
+    <Property Name="Commercial" Type="bit" Nullable="true" />
+    <Property Name="Brand" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="MinQuantity" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" Nullable="true" />
+    <Property Name="definition" Type="varbinary(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="FGItemIns">
+    <Key>
+      <PropertyRef Name="Seq" />
+    </Key>
+    <Property Name="Seq" Type="int" Nullable="false" />
+    <Property Name="SN" Type="varchar" Nullable="false" MaxLength="16" />
+    <Property Name="TransactionDate" Type="datetime" Nullable="false" />
+    <Property Name="Location" Type="nchar" Nullable="false" MaxLength="3" />
+    <Property Name="ModelNo" Type="nchar" Nullable="false" MaxLength="6" />
+  </EntityType>
+  <EntityType Name="C__MigrationHistory1">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="ContextKey" Type="nvarchar" Nullable="false" MaxLength="300" />
+    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ProductVersion" Type="nvarchar" Nullable="false" MaxLength="32" />
+  </EntityType>
+  <EntityType Name="Item_transcation_inventory">
+    <Key>
+      <PropertyRef Name="Seq" />
+      <PropertyRef Name="SN" />
+      <PropertyRef Name="Date" />
+      <PropertyRef Name="Location" />
+      <PropertyRef Name="ModelNo" />
+    </Key>
+    <Property Name="Seq" Type="int" Nullable="false" />
+    <Property Name="SN" Type="varchar" Nullable="false" MaxLength="16" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="Location" Type="nchar" Nullable="false" MaxLength="3" />
+    <Property Name="ModelNo" Type="nchar" Nullable="false" MaxLength="6" />
+  </EntityType>
+  <EntityType Name="Model1">
+    <Key>
+      <PropertyRef Name="MODELNO" />
+      <PropertyRef Name="VERSION" />
+    </Key>
+    <Property Name="MODELNO" Type="varchar" Nullable="false" MaxLength="6" />
+    <Property Name="VERSION" Type="int" Nullable="false" />
+    <Property Name="FG" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="MODEL1" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="SOLE" Type="bit" Nullable="true" />
+    <Property Name="DESC" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="FP_DATE" Type="datetime" Nullable="true" />
+    <Property Name="LABOR_W" Type="bit" Nullable="true" />
+    <Property Name="SNBegin" Type="int" Nullable="true" />
+    <Property Name="SNEnd" Type="int" Nullable="true" />
+    <Property Name="ViewFile" Type="varbinary(max)" Nullable="true" />
+    <Property Name="SPFile" Type="varbinary(max)" Nullable="true" />
+    <Property Name="Commercial" Type="bit" Nullable="true" />
+    <Property Name="Brand" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="MinQuantity" Type="int" Nullable="true" />
+  </EntityType>
+  <Association Name="FK_Item_history_Location">
+    <End Role="Location" Type="SampleModel.Store.Locations" Multiplicity="1" />
+    <End Role="Item_history" Type="SampleModel.Store.Item_history" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="Code" />
+      </Principal>
+      <Dependent Role="Item_history">
+        <PropertyRef Name="Location" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

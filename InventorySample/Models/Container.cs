@@ -17,7 +17,7 @@ namespace InventorySample.Models
         public string EnteredCS { get; set; }
         public string EnteredPT { get; set; }
 
-        public List<Item> items { get; set; }
+        public List<Item_transcation_inventory> items { get; set; }
     }
 }
 

@@ -12,9 +12,18 @@ namespace InventorySample.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class ZoneCode
+    public partial class Location
     {
-        public int Zone { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Location()
+        {
+            this.Item_history = new HashSet<Item_history>();
+        }
+    
         public string Code { get; set; }
+        public Nullable<short> ZoneCode { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Item_history> Item_history { get; set; }
     }
 }

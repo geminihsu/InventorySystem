@@ -99,6 +99,9 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Text.Encodings.Web, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -113,6 +116,12 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -196,23 +205,57 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\FGItemsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Entities\C__MigrationHistory1.cs">
+      <DependentUpon>SampleDBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\FGItemIn.cs">
+      <DependentUpon>SampleDBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Item_history.cs">
+      <DependentUpon>SampleDBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Item_transcation_inventory.cs">
+      <DependentUpon>SampleDBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Location.cs">
+      <DependentUpon>SampleDBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Model.cs">
+      <DependentUpon>SampleDBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Model1.cs">
+      <DependentUpon>SampleDBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_helpdiagramdefinition1_Result.cs">
+      <DependentUpon>SampleDBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>SampleDBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_helpdiagrams1_Result.cs">
+      <DependentUpon>SampleDBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_helpdiagrams_Result.cs">
+      <DependentUpon>SampleDBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sysdiagram.cs">
+      <DependentUpon>SampleDBContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Common\Constants.cs" />
     <Compile Include="Models\Container.cs" />
     <Compile Include="Models\ContainerMapping.cs" />
     <Compile Include="Models\DbHelper.cs" />
     <Compile Include="Models\InventoryHelper.cs" />
-    <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\UploadFileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\C__MigrationHistory.cs">
-      <DependentUpon>SampleDBContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Item.cs">
       <DependentUpon>SampleDBContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SampleDBContext.Context.cs">
@@ -230,13 +273,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SampleDBContext.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Entities\ZoneCode.cs">
-      <DependentUpon>SampleDBContext.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Entities\SampleDBContext.edmx.sql" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -265,6 +306,7 @@
     <Content Include="Entities\SampleDBContext.edmx.diagram">
       <DependentUpon>SampleDBContext.edmx</DependentUpon>
     </Content>
+    <Content Include="Views\UploadFile\Edit.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />

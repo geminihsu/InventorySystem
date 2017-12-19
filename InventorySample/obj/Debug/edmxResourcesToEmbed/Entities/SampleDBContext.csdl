@@ -10,26 +10,221 @@
     <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
     <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
   </EntityType>
-  <EntityType Name="Item">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="SN" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Location" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="ZoneCode" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
-  </EntityType>
-  <EntityType Name="ZoneCode">
-    <Key>
-      <PropertyRef Name="Zone" />
-      <PropertyRef Name="Code" />
-    </Key>
-    <Property Name="Zone" Type="Int32" Nullable="false" />
-    <Property Name="Code" Type="String" MaxLength="3" FixedLength="true" Unicode="true" Nullable="false" />
-  </EntityType>
   <EntityContainer Name="SampleDBContext" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
-    <EntitySet Name="Items" EntityType="Self.Item" />
-    <EntitySet Name="ZoneCodes" EntityType="Self.ZoneCode" />
+    <EntitySet Name="Item_history" EntityType="SampleModel.Item_history" />
+    <EntitySet Name="Locations" EntityType="SampleModel.Location" />
+    <EntitySet Name="Models" EntityType="SampleModel.Model" />
+    <EntitySet Name="sysdiagrams" EntityType="SampleModel.sysdiagram" />
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(SampleModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(SampleModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <AssociationSet Name="FK_Item_history_Location" Association="SampleModel.FK_Item_history_Location">
+      <End Role="Location" EntitySet="Locations" />
+      <End Role="Item_history" EntitySet="Item_history" />
+    </AssociationSet>
+    <EntitySet Name="FGItemIns" EntityType="SampleModel.FGItemIn" />
+    <EntitySet Name="C__MigrationHistory1" EntityType="SampleModel.C__MigrationHistory1" />
+    <EntitySet Name="Item_transcation_inventory" EntityType="SampleModel.Item_transcation_inventory" />
+    <EntitySet Name="Model1" EntityType="SampleModel.Model1" />
+    <FunctionImport Name="sp_alterdiagram1">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram1">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram1">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition1" ReturnType="Collection(SampleModel.sp_helpdiagramdefinition1_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams1" ReturnType="Collection(SampleModel.sp_helpdiagrams1_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram1">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams1" />
   </EntityContainer>
+  <EntityType Name="Item_history">
+    <Key>
+      <PropertyRef Name="Seq" />
+      <PropertyRef Name="SN" />
+    </Key>
+    <Property Name="Seq" Type="Int32" Nullable="false" />
+    <Property Name="SN" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="Location" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="DateIn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DateOut" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="SaleOrderNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TrakingNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ModelNo" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Location1" Relationship="SampleModel.FK_Item_history_Location" FromRole="Item_history" ToRole="Location" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="Code" />
+    </Key>
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="ZoneCode" Type="Int16" />
+    <NavigationProperty Name="Item_history" Relationship="SampleModel.FK_Item_history_Location" FromRole="Location" ToRole="Item_history" />
+  </EntityType>
+  <EntityType Name="Model">
+    <Key>
+      <PropertyRef Name="MODELNO" />
+    </Key>
+    <Property Name="MODELNO" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="VERSION" Type="Int32" Nullable="false" />
+    <Property Name="FG" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="MODEL1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="SOLE" Type="Boolean" />
+    <Property Name="DESC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="FP_DATE" Type="DateTime" Precision="3" />
+    <Property Name="LABOR_W" Type="Boolean" />
+    <Property Name="SNBegin" Type="Int32" />
+    <Property Name="SNEnd" Type="Int32" />
+    <Property Name="ViewFile" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="SPFile" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Commercial" Type="Boolean" />
+    <Property Name="Brand" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MinQuantity" Type="Int32" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <Association Name="FK_Item_history_Location">
+    <End Type="SampleModel.Location" Role="Location" Multiplicity="1" />
+    <End Type="SampleModel.Item_history" Role="Item_history" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="Code" />
+      </Principal>
+      <Dependent Role="Item_history">
+        <PropertyRef Name="Location" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="FGItemIn">
+    <Key>
+      <PropertyRef Name="Seq" />
+    </Key>
+    <Property Name="Seq" Type="Int32" Nullable="false" />
+    <Property Name="SN" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Location" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="true" />
+    <Property Name="ModelNo" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="C__MigrationHistory1">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+    <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Item_transcation_inventory">
+    <Key>
+      <PropertyRef Name="Seq" />
+      <PropertyRef Name="SN" />
+      <PropertyRef Name="Date" />
+      <PropertyRef Name="Location" />
+      <PropertyRef Name="ModelNo" />
+    </Key>
+    <Property Name="Seq" Type="Int32" Nullable="false" />
+    <Property Name="SN" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Location" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="true" />
+    <Property Name="ModelNo" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Model1">
+    <Key>
+      <PropertyRef Name="MODELNO" />
+      <PropertyRef Name="VERSION" />
+    </Key>
+    <Property Name="MODELNO" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="VERSION" Type="Int32" Nullable="false" />
+    <Property Name="FG" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="MODEL1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="SOLE" Type="Boolean" />
+    <Property Name="DESC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="FP_DATE" Type="DateTime" Precision="3" />
+    <Property Name="LABOR_W" Type="Boolean" />
+    <Property Name="SNBegin" Type="Int32" />
+    <Property Name="SNEnd" Type="Int32" />
+    <Property Name="ViewFile" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="SPFile" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Commercial" Type="Boolean" />
+    <Property Name="Brand" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MinQuantity" Type="Int32" />
+  </EntityType>
+  <ComplexType Name="sp_helpdiagramdefinition1_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams1_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
 </Schema>

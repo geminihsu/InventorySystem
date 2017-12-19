@@ -7,11 +7,13 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net;
 
 namespace InventorySample.Controllers
 {
     public class UploadFileController : Controller
     {
+        private SampleDBContext db = new SampleDBContext();
         // GET: UploadFile
         public ActionResult Index()
         {
@@ -80,11 +82,13 @@ namespace InventorySample.Controllers
             var model = new Container()
             {
                 Id = Guid.NewGuid(),
-                items = db.Items.ToList()
+                items = db.Item_transcation_inventory.ToList()
             };
 
             return View(model);
             //return View();
         }
+
+        
     }
 }

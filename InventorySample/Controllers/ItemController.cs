@@ -8,7 +8,7 @@ namespace InventorySample.Controllers
 {
     public class ItemController : Controller
     {
-        // GET: Item
+        // GET: Item_Inventory
         [HttpGet]
         public ActionResult Index()
         {
@@ -23,7 +23,7 @@ namespace InventorySample.Controllers
             var model = new Container()
             {
                 Id = Guid.NewGuid(),
-                items = db.Items.ToList()
+                items = db.Item_transcation_inventory.ToList()
             };
 
             return Json(model, JsonRequestBehavior.AllowGet);

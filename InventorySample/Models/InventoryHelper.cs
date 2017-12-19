@@ -21,7 +21,7 @@ namespace InventorySample.Controllers
             String received_by = "";
             String entered_cs = "";
             String entered_pt = "";
-            List<Item> items = new List<Item>();
+            List<Item_transcation_inventory> items = new List<Item_transcation_inventory>();
 
             Boolean isSerialNo = false;
             int serialIndex = 1;
@@ -60,11 +60,15 @@ namespace InventorySample.Controllers
                                     serialLoc = location;
                                 }
 
-                                Item item = new Item();
-                                item.ID = serialIndex;
+                                Item_transcation_inventory item = new Item_transcation_inventory();
+                                item.Seq = serialIndex;
                                 item.SN = serial_no;
+                                item.ModelNo = serial_no.Substring(0, 6);
                                 item.Location = location;
-                                item.ZoneCode = zoneCode.ToString();
+                                DateTime today = DateTime.Now;
+                                item.Date = today;
+
+
 
                                 items.Add(item);
 
